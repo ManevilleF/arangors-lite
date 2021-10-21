@@ -3,8 +3,8 @@
 
 use anyhow::Error;
 
-use arangors::view::{ArangoSearchViewLink, ArangoSearchViewPropertiesOptions, ViewOptions};
-use arangors::Connection;
+use arangors_lite::view::{ArangoSearchViewLink, ArangoSearchViewPropertiesOptions, ViewOptions};
+use arangors_lite::Connection;
 use std::collections::HashMap;
 
 const URL: &str = "http://localhost:8529";

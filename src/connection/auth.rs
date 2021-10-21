@@ -11,7 +11,7 @@
 ///
 /// # Example
 /// ```rust, ignore
-/// use arangors::connection::Auth;
+/// use arangors_lite::connection::Auth;
 ///
 /// let basic_auth = Auth::basic("username", "password");
 /// let jwt_auth = Auth::jwt("username", "password");

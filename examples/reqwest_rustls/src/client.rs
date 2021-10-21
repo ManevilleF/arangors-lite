@@ -5,8 +5,8 @@ use ::reqwest::Client;
 use http::header::HeaderMap;
 use uclient::ClientExt;
 
-use arangors::ClientError;
-use arangors::transaction::TRANSACTION_HEADER;
+use arangors_lite::ClientError;
+use arangors_lite::transaction::TRANSACTION_HEADER;
 
 #[derive(Debug, Clone)]
 pub struct ReqwestClient {

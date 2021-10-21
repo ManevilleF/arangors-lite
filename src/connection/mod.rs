@@ -13,7 +13,7 @@
 //! - With authentication
 //!
 //! ```rust
-//! use arangors::Connection;
+//! use arangors_lite::Connection;
 //!
 //! # #[cfg_attr(not(feature="blocking"), maybe_async::maybe_async, tokio::main)]
 //! # #[cfg_attr(feature = "blocking", maybe_async::must_be_sync)]
@@ -29,7 +29,7 @@
 //!
 //! - No authentication
 //! ```rust, ignore
-//! use arangors::Connection;
+//! use arangors_lite::Connection;
 //! let conn = Connection::establish_without_auth("http://localhost:8529").await.unwrap();
 //! ```
 
@@ -269,7 +269,7 @@ impl Connection<Normal> {
     ///
     /// Example:
     /// ```rust, ignore
-    /// use arangors::Connection;
+    /// use arangors_lite::Connection;
     ///
     /// let conn = Connection::establish_without_auth("http://localhost:8529").await.unwrap();
     /// ```
@@ -285,7 +285,7 @@ impl Connection<Normal> {
     ///
     /// Example:
     /// ```rust
-    /// use arangors::Connection;
+    /// use arangors_lite::Connection;
     ///
     /// # #[cfg_attr(not(feature="blocking"), maybe_async::maybe_async, tokio::main)]
     /// # #[cfg_attr(feature="blocking", maybe_async::must_be_sync)]
@@ -314,7 +314,7 @@ impl Connection<Normal> {
     /// Example:
     ///
     /// ```rust
-    /// use arangors::Connection;
+    /// use arangors_lite::Connection;
     ///
     /// # #[cfg_attr(not(feature="blocking"), maybe_async::maybe_async, tokio::main)]
     /// # #[cfg_attr(feature = "blocking", maybe_async::must_be_sync)]
@@ -366,7 +366,7 @@ impl Connection<Normal> {
     ///
     /// # Example
     /// ```rust
-    /// use arangors::Connection;
+    /// use arangors_lite::Connection;
     /// # #[cfg_attr(not(feature="blocking"), maybe_async::maybe_async, tokio::main)]
     /// # #[cfg_attr(feature = "blocking", maybe_async::must_be_sync)]
     /// # async fn main() {

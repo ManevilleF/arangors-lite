@@ -125,7 +125,7 @@
 //! - With authentication
 //!
 //! ```rust
-//! use arangors::Connection;
+//! use arangors_lite::Connection;
 //!
 //! # #[cfg_attr(not(feature="blocking"), maybe_async::maybe_async, tokio::main)]
 //! # #[cfg_attr(feature = "blocking", maybe_async::must_be_sync)]
@@ -143,14 +143,14 @@
 //! - Without authentication, only use in evaluation setting
 //!
 //! ``` rust, ignore
-//! # use arangors::Connection;
+//! # use arangors_lite::Connection;
 //! let conn = Connection::establish_without_auth("http://localhost:8529").await.unwrap();
 //! ```
 //!
 //! ### Database && Collection
 //!
 //! ```rust
-//! use arangors::Connection;
+//! use arangors_lite::Connection;
 //!
 //! # #[cfg_attr(not(feature="blocking"), maybe_async::maybe_async, tokio::main)]
 //! # #[cfg_attr(feature = "blocking", maybe_async::must_be_sync)]
@@ -190,7 +190,7 @@
 //! `serde::Value`.
 //!
 //! ```rust
-//! # use arangors::Connection;
+//! # use arangors_lite::Connection;
 //! # use serde::Deserialize;
 //!
 //! #[derive(Deserialize, Debug)]
@@ -227,7 +227,7 @@
 //! next batch and update cursor with the cursor.
 //!
 //! ```rust
-//! # use arangors::{ClientError,Connection, AqlQuery};
+//! # use arangors_lite::{ClientError,Connection, AqlQuery};
 //!
 //! # #[cfg_attr(not(feature="blocking"), maybe_async::maybe_async, tokio::main)]
 //! # #[cfg_attr(feature = "blocking", maybe_async::must_be_sync)]
@@ -280,7 +280,7 @@
 //! Here is an example of strong typed query result with `aql_str`:
 //!
 //! ```rust
-//! # use arangors::Connection;
+//! # use arangors_lite::Connection;
 //! # use serde::Deserialize;
 //!
 //! #[derive(Deserialize, Debug)]
@@ -310,7 +310,7 @@
 //! ```rust
 //! # use serde::{Deserialize, Serialize};
 //! # use std::collections::HashMap;
-//! use arangors::{Connection, Document};
+//! use arangors_lite::{Connection, Document};
 //!
 //! #[derive(Serialize, Deserialize, Debug)]
 //! struct User {
@@ -348,7 +348,7 @@
 //! options available.
 //!
 //! ```rust
-//! use arangors::{AqlQuery, Connection, Cursor, Database};
+//! use arangors_lite::{AqlQuery, Connection, Cursor, Database};
 //! use serde_json::value::Value;
 //!
 //! # #[cfg_attr(not(feature="blocking"), maybe_async::maybe_async, tokio::main)]

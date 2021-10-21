@@ -36,8 +36,8 @@ pub(crate) const INDEX_API_PATH: &str = "_api/index";
 ///
 /// # Example
 /// ```
-/// # use arangors::Connection;
-/// # use arangors::index::{IndexSettings, Index};
+/// # use arangors_lite::Connection;
+/// # use arangors_lite::index::{IndexSettings, Index};
 ///
 /// # #[cfg_attr(not(feature="blocking"), maybe_async::maybe_async, tokio::main)]
 /// # #[cfg_attr(feature = "blocking", maybe_async::must_be_sync)]

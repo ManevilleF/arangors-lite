@@ -3,7 +3,7 @@
 use log::trace;
 use pretty_assertions::assert_eq;
 
-use arangors::Connection;
+use arangors_lite::Connection;
 use common::{
     connection, get_arangodb_host, get_normal_password, get_normal_user, get_root_password,
     get_root_user, test_root_and_normal, test_setup,
@@ -26,14 +26,14 @@ async fn test_create_and_drop_database() {
 
     let result = conn.create_database(NEW_DB_NAME).await;
     if let Err(e) = result {
-        assert!(false, "Fail to create database: {:?}", e)
+        panic!("Fail to create database: {:?}", e)
     };
     let result = conn.db(NEW_DB_NAME).await;
     assert_eq!(result.is_err(), false);
 
     let result = conn.drop_database(NEW_DB_NAME).await;
     if let Err(e) = result {
-        assert!(false, "Fail to drop database: {:?}", e)
+        panic!("Fail to drop database: {:?}", e)
     };
     let result = conn.db(NEW_DB_NAME).await;
     assert_eq!(result.is_err(), true);
@@ -56,7 +56,7 @@ async fn test_fetch_current_database_info() {
                 trace!("{:?}", info);
                 assert_eq!(info.is_system, false)
             }
-            Err(e) => assert!(false, "Fail to fetch database: {:?}", e),
+            Err(e) => panic!("Fail to fetch database: {:?}", e),
         }
     }
     test_root_and_normal(fetch_current_database).await;

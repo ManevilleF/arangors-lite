@@ -2,8 +2,8 @@
 #![allow(unused_parens)]
 
 use anyhow::Error;
-use arangors::Document;
-use arangors::{
+use arangors_lite::Document;
+use arangors_lite::{
     transaction::{TransactionCollections, TransactionSettings},
     Connection,
 };

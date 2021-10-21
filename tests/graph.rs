@@ -5,7 +5,7 @@ use log::trace;
 use pretty_assertions::assert_eq;
 use serde_json::{json, Value};
 
-use arangors::{
+use arangors_lite::{
     collection::{
         options::{ChecksumOptions, PropertiesOptions},
         response::Status,

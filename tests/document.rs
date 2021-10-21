@@ -5,7 +5,7 @@ use log::trace;
 use pretty_assertions::assert_eq;
 use serde_json::{json, Value};
 
-use arangors::{
+use arangors_lite::{
     document::{
         options::{
             InsertOptions, OverwriteMode, ReadOptions, RemoveOptions, ReplaceOptions, UpdateOptions,
@@ -484,7 +484,7 @@ async fn test_patch_update_document() {
 
     let result = update.unwrap();
     assert_eq!(
-        result.header().unwrap()._rev != _rev.to_string(),
+        result.header().unwrap()._rev != *_rev,
         true,
         "We should get a different revision after update"
     );

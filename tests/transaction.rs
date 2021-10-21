@@ -6,7 +6,7 @@ use pretty_assertions::assert_eq;
 use serde_json::{json, Value};
 
 use crate::common::{collection, connection};
-use arangors::{
+use arangors_lite::{
     collection::{
         options::{ChecksumOptions, PropertiesOptions},
         response::Status,

@@ -6,7 +6,7 @@ use pretty_assertions::assert_eq;
 use serde_json::{json, Value};
 
 use crate::common::{collection, connection};
-use arangors::{
+use arangors_lite::{
     collection::{
         options::{ChecksumOptions, PropertiesOptions},
         response::Status,
@@ -312,11 +312,7 @@ async fn test_get_checksum() {
 
     let updated_result = checksum.unwrap();
 
-    let changed = if updated_result.revision != result.revision {
-        true
-    } else {
-        false
-    };
+    let changed = updated_result.revision != result.revision;
     assert_eq!(changed, true);
     assert_eq!(updated_result.info.name, collection_name);
     assert_eq!(updated_result.info.is_system, false);

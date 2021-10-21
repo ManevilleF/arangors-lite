@@ -7,11 +7,11 @@ use maybe_async::maybe_async;
 use pretty_assertions::assert_eq;
 use std::collections::HashMap;
 
-use arangors::analyzer::{
+use arangors_lite::analyzer::{
     AnalyzerCase, AnalyzerFeature, AnalyzerInfo, NgramAnalyzerProperties, NgramStreamType,
     NormAnalyzerProperties,
 };
-use arangors::{
+use arangors_lite::{
     collection::{
         options::{ChecksumOptions, PropertiesOptions},
         response::Status,

@@ -7,8 +7,8 @@ use log::{info, trace};
 use maybe_async::maybe_async;
 use pretty_assertions::assert_eq;
 
-use arangors::view::{ArangoSearchViewLink, ArangoSearchViewPropertiesOptions, ViewOptions};
-use arangors::{
+use arangors_lite::view::{ArangoSearchViewLink, ArangoSearchViewPropertiesOptions, ViewOptions};
+use arangors_lite::{
     collection::{
         options::{ChecksumOptions, PropertiesOptions},
         response::Status,

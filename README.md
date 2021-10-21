@@ -127,7 +127,7 @@ Example:
 - With authentication
 
 ```rust
-use arangors::Connection;
+use arangors_lite::Connection;
 
 // (Recommended) Handy functions
 let conn = Connection::establish_jwt("http://localhost:8529", "username", "password")
@@ -147,7 +147,7 @@ let conn = Connection::establish_without_auth("http://localhost:8529").await.unw
 ### Database && Collection
 
 ```rust
-use arangors::Connection;
+use arangors_lite::Connection;
 
 let db = conn.db("test_db").await.unwrap();
 let collection = db.collection("test_collection").await.unwrap();
@@ -269,7 +269,7 @@ let result: Vec<User> = db
 This function can be used to start a AQL query with bind variables.
 
 ```rust
-use arangors::{Connection, Document};
+use arangors_lite::{Connection, Document};
 
 #[derive(Serialize, Deserialize, Debug)]
 struct User {
@@ -299,7 +299,7 @@ vars, limit memory, and all others
 options available.
 
 ```rust
-use arangors::{AqlQuery, Connection, Cursor, Database};
+use arangors_lite::{AqlQuery, Connection, Cursor, Database};
 use serde_json::value::Value;
 
 

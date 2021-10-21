@@ -9,7 +9,7 @@ use std::io::Write;
 use serde::{Deserialize, Serialize};
 use serde_json::value::Value;
 
-use arangors::{AqlQuery, Connection};
+use arangors_lite::{AqlQuery, Connection};
 use std::collections::HashMap;
 
 const URL: &str = "http://localhost:8529";

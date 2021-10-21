@@ -1,7 +1,7 @@
 /// Types related to AQL query in arangoDB.
 ///
 /// While aql queries are performed on database, it would be ponderous to
-/// place all aql query related methods and types in `arangors::database`.
+/// place all aql query related methods and types in `arangors_lite::database`.
 ///
 /// Steps to perform a AQL query:
 /// 1. (optional) construct a AqlQuery object.

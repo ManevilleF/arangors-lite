@@ -79,9 +79,9 @@ pub struct TransactionList {
 /// This is similar to the way traditional RDBMS do it with BEGIN, COMMIT and ROLLBACK operations.
 /// # Example
 /// ```
-/// # use arangors::Connection;
-/// # use arangors::Document;
-/// # use arangors::transaction::{TransactionCollections, TransactionSettings};
+/// # use arangors_lite::Connection;
+/// # use arangors_lite::Document;
+/// # use arangors_lite::transaction::{TransactionCollections, TransactionSettings};
 /// # use serde_json::{json, Value};
 ///
 /// # #[cfg_attr(not(feature="blocking"), maybe_async::maybe_async, tokio::main)]

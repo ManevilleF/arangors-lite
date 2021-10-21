@@ -2,7 +2,7 @@
 #![allow(unused_parens)]
 use pretty_assertions::assert_eq;
 
-use arangors::{connection::Permission, Connection};
+use arangors_lite::{connection::Permission, Connection};
 use common::{
     connection, get_arangodb_host, get_normal_password, get_normal_user, test_root_and_normal,
     test_setup,
@@ -20,7 +20,7 @@ async fn test_list_databases() {
     let db_permission = dbs.get("test_db").unwrap();
     match db_permission {
         Permission::ReadOnly | Permission::NoAccess => {
-            assert!(false, "Invalid permission {:?}", db_permission)
+            panic!("Invalid permission {:?}", db_permission)
         }
         _ => {}
     };

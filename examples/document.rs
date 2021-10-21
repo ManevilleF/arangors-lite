@@ -3,9 +3,9 @@
 
 use anyhow::Error;
 
-use arangors::{document::options::InsertOptions, Collection, Connection};
+use arangors_lite::{document::options::InsertOptions, Collection, Connection};
 
-use arangors::document::{
+use arangors_lite::document::{
     options::{RemoveOptions, ReplaceOptions, UpdateOptions},
     response::DocumentResponse,
 };

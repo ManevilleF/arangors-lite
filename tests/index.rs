@@ -6,7 +6,7 @@ use pretty_assertions::assert_eq;
 use serde_json::{json, Value};
 
 use crate::common::{collection, connection};
-use arangors::{
+use arangors_lite::{
     collection::{
         options::{ChecksumOptions, PropertiesOptions},
         response::Status,
@@ -45,7 +45,7 @@ async fn test_persistent_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -87,7 +87,7 @@ async fn test_hash_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -129,7 +129,7 @@ async fn test_skiplist_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -167,7 +167,7 @@ async fn test_geo_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -198,7 +198,7 @@ async fn test_ttl_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -229,7 +229,7 @@ async fn test_fulltext_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -247,5 +247,5 @@ async fn test_list_indexes() {
     let database = conn.db("test_db").await.unwrap();
     let list = database.indexes(collection_name).await.unwrap();
 
-    assert!(list.indexes.len() > 0);
+    assert!(!list.indexes.is_empty());
 }

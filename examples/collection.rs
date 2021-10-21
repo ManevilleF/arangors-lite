@@ -3,7 +3,7 @@
 
 use anyhow::Error;
 
-use arangors::Connection;
+use arangors_lite::Connection;
 
 const URL: &str = "http://localhost:8529";
 

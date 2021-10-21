@@ -4,7 +4,7 @@
 use pretty_assertions::assert_eq;
 use serde::{Deserialize, Serialize};
 
-use arangors::{AqlQuery, Connection, Document};
+use arangors_lite::{AqlQuery, Connection, Document};
 use common::{connection, test_setup};
 
 use crate::common::{get_arangodb_host, get_root_password, get_root_user};
