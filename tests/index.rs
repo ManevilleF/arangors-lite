@@ -6,7 +6,7 @@ use pretty_assertions::assert_eq;
 use serde_json::{json, Value};
 
 use crate::common::{collection, connection};
-use arangors::{
+use arangors_lite::{
     collection::{
         options::{ChecksumOptions, PropertiesOptions},
         response::Status,
@@ -19,11 +19,7 @@ use common::{get_arangodb_host, get_normal_password, get_normal_user, test_setup
 
 pub mod common;
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_persistent_index() {
     test_setup();
     let collection_name = "test_collection";
@@ -49,7 +45,7 @@ async fn test_persistent_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -65,11 +61,7 @@ async fn test_persistent_index() {
     }
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_hash_index() {
     test_setup();
     let collection_name = "test_collection";
@@ -95,7 +87,7 @@ async fn test_hash_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -111,11 +103,7 @@ async fn test_hash_index() {
     }
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_skiplist_index() {
     test_setup();
     let collection_name = "test_collection";
@@ -141,7 +129,7 @@ async fn test_skiplist_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -157,11 +145,7 @@ async fn test_skiplist_index() {
     }
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_geo_index() {
     test_setup();
     let collection_name = "test_collection";
@@ -183,7 +167,7 @@ async fn test_geo_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -192,11 +176,7 @@ async fn test_geo_index() {
     }
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_ttl_index() {
     test_setup();
     let collection_name = "test_collection";
@@ -218,7 +198,7 @@ async fn test_ttl_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -227,11 +207,7 @@ async fn test_ttl_index() {
     }
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_fulltext_index() {
     test_setup();
     let collection_name = "test_collection";
@@ -253,7 +229,7 @@ async fn test_fulltext_index() {
 
     let delete_result = database.delete_index(&index.id).await.unwrap();
 
-    assert!(index.id.len() > 0);
+    assert!(!index.id.is_empty());
     assert_eq!(index.name, index_name.to_string());
     assert_eq!(delete_result.id, index.id);
 
@@ -262,11 +238,7 @@ async fn test_fulltext_index() {
     }
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_list_indexes() {
     test_setup();
     let collection_name = "test_collection";
@@ -275,5 +247,5 @@ async fn test_list_indexes() {
     let database = conn.db("test_db").await.unwrap();
     let list = database.indexes(collection_name).await.unwrap();
 
-    assert!(list.indexes.len() > 0);
+    assert!(!list.indexes.is_empty());
 }

@@ -1,11 +1,15 @@
 <!-- cargo-sync-readme start -->
 
-# arangors
+# arangors lite
 
-[![Build Status](https://github.com/fMeow/arangors/workflows/CI%20%28Linux%29/badge.svg?branch=master)](https://github.com/fMeow/arangors/actions)
+> `arangors_lite` is a fork of [arangors](https://github.com/fMeow/arangors) by fMeow.
+
+[![Build Status](https://github.com/ManevilleF/arangors/workflows/linux.yml/badge.svg)](https://github.com/ManevilleF/arangors/actions)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Crates.io](https://img.shields.io/crates/v/arangors.svg)](https://crates.io/crates/arangors)
-[![arangors](https://docs.rs/arangors/badge.svg)](https://docs.rs/arangors)
+[![Crates.io](https://img.shields.io/crates/v/arangors_lite.svg)](https://crates.io/crates/arangors_lite)
+[![arangors](https://docs.rs/arangors_lite/badge.svg)](https://docs.rs/arangors_lite)
+[![dependency status](https://deps.rs/crate/arangors_lite/0.1.0/status.svg)](https://deps.rs/crate/arangors_lite)
+
 
 `arangors` is an intuitive rust client for [ArangoDB](https://www.arangodb.com/),
 inspired by [pyArango](https://github.com/tariqdaouda/pyArango).
@@ -84,30 +88,30 @@ the Client yourself (see examples).
 Currently out-of-box supported ecosystem are:
 - `reqwest_async`
 - `reqwest_blocking`
-- `surf_async`
 
 By default, `arangors` use `reqwest_async` as underling HTTP Client to
-connect with ArangoDB. You can switch other ecosystem in feature gate:
-
-```toml
-[dependencies]
-arangors = { version = "0.4", features = ["surf_async"], default-features = false }
-```
-
-Or if you want to stick with other ecosystem that are not listed in the
-feature gate, you can get vanilla `arangors` without any HTTP client
-dependency:
+connect with ArangoDB.
 
 ```toml
 [dependencies]
 ## This one is async
-arangors = { version = "0.4", default-features = false }
+arangors = { version = "0.4" }
 ## This one is synchronous
-arangors = { version = "0.4", features = ["blocking"], default-features = false }
+arangors = { version = "0.4", features = ["blocking"] }
 ```
 
 Thanks to `maybe_async`, `arangors` can unify sync and async API and toggle
 with a feature gate. Arangors adopts async first policy.
+
+By default `reqwest` uses OpenSSL. To use `rustls` you may disable default features and use the `rustls` feature:
+
+```toml
+[dependencies]
+## This one uses openssl
+arangors = { version = "0.4" }
+## This one rustls
+arangors = { version = "0.4", features = ["rustls"], default-features = false }
+```
 
 ### Connection
 
@@ -123,7 +127,7 @@ Example:
 - With authentication
 
 ```rust
-use arangors::Connection;
+use arangors_lite::Connection;
 
 // (Recommended) Handy functions
 let conn = Connection::establish_jwt("http://localhost:8529", "username", "password")
@@ -143,7 +147,7 @@ let conn = Connection::establish_without_auth("http://localhost:8529").await.unw
 ### Database && Collection
 
 ```rust
-use arangors::Connection;
+use arangors_lite::Connection;
 
 let db = conn.db("test_db").await.unwrap();
 let collection = db.collection("test_collection").await.unwrap();
@@ -265,7 +269,7 @@ let result: Vec<User> = db
 This function can be used to start a AQL query with bind variables.
 
 ```rust
-use arangors::{Connection, Document};
+use arangors_lite::{Connection, Document};
 
 #[derive(Serialize, Deserialize, Debug)]
 struct User {
@@ -295,7 +299,7 @@ vars, limit memory, and all others
 options available.
 
 ```rust
-use arangors::{AqlQuery, Connection, Cursor, Database};
+use arangors_lite::{AqlQuery, Connection, Cursor, Database};
 use serde_json::value::Value;
 
 

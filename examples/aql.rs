@@ -9,7 +9,7 @@ use std::io::Write;
 use serde::{Deserialize, Serialize};
 use serde_json::value::Value;
 
-use arangors::{AqlQuery, Connection};
+use arangors_lite::{AqlQuery, Connection};
 use std::collections::HashMap;
 
 const URL: &str = "http://localhost:8529";
@@ -21,9 +21,8 @@ struct User {
     email: String,
 }
 
-#[cfg_attr(feature = "reqwest_async", tokio::main)]
-#[cfg_attr(feature = "surf_async", async_std::main)]
-#[cfg_attr(feature = "reqwest_blocking", maybe_async::must_be_sync)]
+#[cfg_attr(not(feature = "blocking"), tokio::main)]
+#[cfg_attr(feature = "blocking", maybe_async::must_be_sync)]
 async fn main() {
     env_logger::init();
 
@@ -93,10 +92,3 @@ async fn main() {
     let result: Vec<User> = database.aql_query(aql).await.unwrap();
     println!("{:?}", result);
 }
-
-#[cfg(not(any(
-    feature = "reqwest_blocking",
-    feature = "reqwest_async",
-    feature = "surf_async"
-)))]
-fn main() {}

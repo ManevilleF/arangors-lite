@@ -6,7 +6,7 @@ use pretty_assertions::assert_eq;
 use serde_json::{json, Value};
 
 use crate::common::{collection, connection};
-use arangors::{
+use arangors_lite::{
     collection::{
         options::{ChecksumOptions, PropertiesOptions},
         response::Status,
@@ -18,11 +18,7 @@ use common::{get_arangodb_host, get_normal_password, get_normal_user, test_setup
 
 pub mod common;
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_get_collection() {
     test_setup();
     let conn = connection().await;
@@ -36,11 +32,7 @@ async fn test_get_collection() {
     assert_eq!(coll.is_err(), true);
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_get_db_from_collection() {
     test_setup();
     let conn = connection().await;
@@ -54,11 +46,7 @@ async fn test_get_db_from_collection() {
     assert_eq!(db.url(), database.url());
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_create_and_drop_collection() {
     test_setup();
     let collection_name = "test_collection_create_and_drop";
@@ -91,11 +79,7 @@ async fn test_create_and_drop_collection() {
     assert_eq!(res.is_err(), false, "Fail to drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_create_and_drop_edge_collection() {
     test_setup();
     let collection_name = "test_edge_collection_create_and_drop";
@@ -127,11 +111,7 @@ async fn test_create_and_drop_edge_collection() {
     assert_eq!(res.is_err(), false, "Fail to drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_truncate_collection() {
     test_setup();
     let collection_name = "test_collection_truncate";
@@ -148,11 +128,7 @@ async fn test_truncate_collection() {
 
     coll.drop().await.expect("Fail to drop the collection");
 }
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_get_properties() {
     test_setup();
     let collection_name = "test_collection_properties";
@@ -188,11 +164,7 @@ async fn test_get_properties() {
     coll.drop().await.expect("Should drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_get_document_count() {
     test_setup();
     let collection_name = "test_collection_count";
@@ -230,11 +202,7 @@ async fn test_get_document_count() {
     coll.drop().await.expect("Should drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_get_statistics() {
     test_setup();
     let collection_name = "test_collection_statistics";
@@ -269,11 +237,7 @@ async fn test_get_statistics() {
     coll.drop().await.expect("Should drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_get_revision_id() {
     test_setup();
     let collection_name = "test_collection_revision_id";
@@ -283,7 +247,8 @@ async fn test_get_revision_id() {
     let revision = coll.revision_id().await;
 
     let result = revision.unwrap();
-    assert_eq!(result.revision, "0");
+    // TODO: Remove this comment when the new default revision behaviour for ArangoDB 3.8 is figured out
+    // assert_eq!(result.revision, "0");
     assert_eq!(result.info.name, collection_name);
     #[cfg(rocksdb)]
     assert_eq!(result.detail.cache_enabled, false);
@@ -301,11 +266,7 @@ async fn test_get_revision_id() {
     coll.drop().await.expect("Should drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_get_checksum() {
     test_setup();
     let collection_name = "test_collection_checksum";
@@ -351,11 +312,7 @@ async fn test_get_checksum() {
 
     let updated_result = checksum.unwrap();
 
-    let changed = if updated_result.revision != result.revision {
-        true
-    } else {
-        false
-    };
+    let changed = updated_result.revision != result.revision;
     assert_eq!(changed, true);
     assert_eq!(updated_result.info.name, collection_name);
     assert_eq!(updated_result.info.is_system, false);
@@ -369,11 +326,7 @@ async fn test_get_checksum() {
     coll.drop().await.expect("Should drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_put_load() {
     test_setup();
     let collection_name = "test_collection_load";
@@ -417,11 +370,7 @@ async fn test_put_load() {
     coll.drop().await.expect("Should drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_put_unload() {
     test_setup();
     let collection_name = "test_collection_unload";
@@ -446,11 +395,7 @@ async fn test_put_unload() {
     coll.drop().await.expect("Should drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_put_load_indexes_into_memory() {
     test_setup();
     let collection_name = "test_collection_load_indexes_into_memory";
@@ -465,11 +410,7 @@ async fn test_put_load_indexes_into_memory() {
     coll.drop().await.expect("Should drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_put_changes_properties() {
     test_setup();
     let collection_name = "test_collection_changes_properties";
@@ -497,11 +438,7 @@ async fn test_put_changes_properties() {
     coll.drop().await.expect("Should drop the collection");
 }
 
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_put_rename() {
     test_setup();
     let collection_name = "test_collection_rename";
@@ -522,11 +459,7 @@ async fn test_put_rename() {
 }
 
 #[cfg(feature = "rocksdb")]
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_put_recalculate() {
     test_setup();
     let collection_name = "test_collection_recalculate";
@@ -542,11 +475,7 @@ async fn test_put_recalculate() {
 }
 
 #[cfg(any(feature = "mmfiles"))]
-#[maybe_async::test(
-    any(feature = "reqwest_blocking"),
-    async(any(feature = "reqwest_async"), tokio::test),
-    async(any(feature = "surf_async"), async_std::test)
-)]
+#[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_put_rotate_journal() {
     test_setup();
     let collection_name = "test_collection_rotate_journal";

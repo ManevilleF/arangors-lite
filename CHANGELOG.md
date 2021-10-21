@@ -1,4 +1,12 @@
-# Changelog
+# Arangors Lite Changelog
+
+## 0.1.0
+
+* Removed `uclient` dependency
+* No more `surf` client ecosystem
+* Simplified and Fixed feature gates, now correctly additive
+
+# Original Arangors Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
@@ -14,7 +22,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* use uclient instead of arangors::client ([823e6e1](https://github.com/fMeow/arangors/commit/823e6e1b10797a09ef36a85ca25e7d5c18169ac9))
+* use uclient instead of arangors_lite::client ([823e6e1](https://github.com/fMeow/arangors/commit/823e6e1b10797a09ef36a85ca25e7d5c18169ac9))
 
 ### [0.4.8](https://github.com/fMeow/arangors/compare/v0.4.7...v0.4.8) (2021-05-01)
 
