@@ -1,11 +1,15 @@
 <!-- cargo-sync-readme start -->
 
-# arangors
+# arangors lite
 
-[![Build Status](https://github.com/fMeow/arangors/workflows/CI%20%28Linux%29/badge.svg?branch=master)](https://github.com/fMeow/arangors/actions)
+> `arangors_lite` is a fork of [arangors](https://github.com/fMeow/arangors) by fMeow.
+
+[![Build Status](https://github.com/ManevilleF/arangors/workflows/linux.yml/badge.svg)](https://github.com/ManevilleF/arangors/actions)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Crates.io](https://img.shields.io/crates/v/arangors.svg)](https://crates.io/crates/arangors)
-[![arangors](https://docs.rs/arangors/badge.svg)](https://docs.rs/arangors)
+[![Crates.io](https://img.shields.io/crates/v/arangors_lite.svg)](https://crates.io/crates/arangors_lite)
+[![arangors](https://docs.rs/arangors_lite/badge.svg)](https://docs.rs/arangors_lite)
+[![dependency status](https://deps.rs/crate/arangors_lite/0.1.0/status.svg)](https://deps.rs/crate/arangors_lite)
+
 
 `arangors` is an intuitive rust client for [ArangoDB](https://www.arangodb.com/),
 inspired by [pyArango](https://github.com/tariqdaouda/pyArango).

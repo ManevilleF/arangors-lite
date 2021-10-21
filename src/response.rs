@@ -126,21 +126,20 @@ mod test {
         let text = "{\"id\":\"9947\",\"name\":\"relation\",\"status\":2,\"type\":3,\"isSystem\": \
                     false,\"globallyUniqueId\":\"hD260BE2A30F9/9947\"}";
         let result = serde_json::from_str::<Response<CollectionResponse>>(text);
-        assert_eq!(result.is_ok(), true, "failed: {:?}", result);
+        assert!(result.is_ok(), "failed: {:?}", result);
 
         let text = "{\"error\":false,\"code\":412,\"id\":\"9947\",\"name\":\"relation\",\"status\"\
                     :2,\"type\":3,\"isSystem\": false,\"globallyUniqueId\":\"hD260BE2A30F9/9947\"}";
         let result = serde_json::from_str::<Response<CollectionResponse>>(text);
-        assert_eq!(result.is_ok(), true, "failed: {:?}", result);
+        assert!(result.is_ok(), "failed: {:?}", result);
 
         let text = "{\"error\":true,\"code\":412,\"errorMessage\":\"error\",\"errorNum\":1200}";
         let result = serde_json::from_str::<Response<CollectionResponse>>(text);
-        assert_eq!(result.is_ok(), true, "failed: {:?}", result);
+        assert!(result.is_ok(), "failed: {:?}", result);
         let response = Into::<Result<_, _>>::into(result.unwrap());
 
-        assert_eq!(
+        assert!(
             response.is_err(),
-            true,
             "response should be error: {:?}",
             response
         );
