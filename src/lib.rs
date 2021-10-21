@@ -44,51 +44,9 @@
 //! - full featured AQL query
 //! - support both `async` and sync
 //!
-//! ## TODO
-//!
-//! - (Done) Milestone 0.1.x
-//!
-//!     Synchronous connection based on `reqwest` and full featured AQL query.
-//!
-//! - (X) Milestone 0.2.x
-//!
-//!     Fill the unimplemented API in `Connection`, `Database`, `Collection` and
-//!     `Document`.
-//!
-//!     ~~In this stage, all operations available for database, collection and
-//!     document should be implemented.~~
-//!
-//!     Well, I am too lazy to fill all API, as the AQL syntax suffices in most
-//!     cases. Maybe fulfill this goal in 0.4.x .
-//!
-//! - (Done) Milestone 0.3.x
-//!
-//!     Implement both sync and async client. Also, offers a way to use custom
-//!     HTTP client ecosystem.
-//!
-//! - (WIP) Milestone 1.0.x
-//!
-//!     Provides the API related to:
-//!     - (X) Graph Management
-//!     - (X) Index Management
-//!     - ( ) User Management
-//!
-//!     In this stage, all operations available for database, collection and
-//!     document should be implemented.
-//!
 //! ## Glance
 //!
-//! ### Use Different HTTP Ecosystem, Regardless of Async or Sync
-//!
-//! You can switch to different HTTP ecosystem with a feature gate, or implement
-//! the Client yourself (see examples).
-//!
-//! Currently out-of-box supported ecosystem are:
-//! - `reqwest_async`
-//! - `reqwest_blocking`
-//!
-//! By default, `arangors` use `reqwest_async` as underling HTTP Client to
-//! connect with ArangoDB.
+//! ### Use Async or sync code
 //!
 //! ```toml
 //! [dependencies]

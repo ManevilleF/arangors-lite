@@ -9,7 +9,7 @@ description = "Rust driver for ArangoDB"
 repository = "https://github.com/ManevilleF/arangors"
 documentation = "https://docs.rs/arangors_lite"
 keywords = [ "nosql", "database", "client", "driver", "arangoDB" ]
-exclude = [ ".gitignore", ".github", "tests/**/*" ]
+exclude = [ ".gitignore", ".github", "tests/**/*", "examples" ]
 
 [package.metadata.docs.rs]
 all-features = false
@@ -53,8 +53,8 @@ futures = "0.3"
 
 [dev-dependencies]
 env_logger = "0.9"
-pretty_assertions = "0.7"
-regex = "1"
+pretty_assertions = "1.0"
+regex = "1.5"
 anyhow = "1"
 
   [dev-dependencies.tokio]
