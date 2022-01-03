@@ -34,16 +34,16 @@ pub enum DocumentResponse<T> {
 /// returns
 impl<T> DocumentResponse<T> {
     /// Should be true when the server send back an empty object {}
-    pub fn is_silent(&self) -> bool {
+    pub const fn is_silent(&self) -> bool {
         matches!(self, DocumentResponse::Silent)
     }
     /// Should be true if there is a response from the server
-    pub fn has_response(&self) -> bool {
+    pub const fn has_response(&self) -> bool {
         matches!(self, DocumentResponse::Response { .. })
     }
 
     /// Return the document header contained inside the response
-    pub fn header(&self) -> Option<&Header> {
+    pub const fn header(&self) -> Option<&Header> {
         if let DocumentResponse::Response { header, .. } = self {
             Some(header)
         } else {
@@ -51,7 +51,7 @@ impl<T> DocumentResponse<T> {
         }
     }
     /// Return the old document before changes
-    pub fn old_doc(&self) -> Option<&T> {
+    pub const fn old_doc(&self) -> Option<&T> {
         if let DocumentResponse::Response { old, .. } = self {
             old.as_ref()
         } else {
@@ -59,7 +59,7 @@ impl<T> DocumentResponse<T> {
         }
     }
     /// Return the new document
-    pub fn new_doc(&self) -> Option<&T> {
+    pub const fn new_doc(&self) -> Option<&T> {
         if let DocumentResponse::Response { new, .. } = self {
             new.as_ref()
         } else {
@@ -67,7 +67,7 @@ impl<T> DocumentResponse<T> {
         }
     }
     /// return the old revision of the document
-    pub fn old_rev(&self) -> Option<&String> {
+    pub const fn old_rev(&self) -> Option<&String> {
         if let DocumentResponse::Response { _old_rev, .. } = self {
             _old_rev.as_ref()
         } else {
@@ -91,7 +91,7 @@ where
             .ok_or_else(|| DeError::custom("should be a json object"))?;
 
         if json.is_empty() {
-            Ok(DocumentResponse::Silent)
+            Ok(Self::Silent)
         } else {
             let _id = json
                 .remove("_id")
@@ -120,7 +120,7 @@ where
                 .map_err(DeError::custom)?;
             let _old_rev = json.remove("_old_rev").map(|v| v.to_string());
 
-            Ok(DocumentResponse::Response {
+            Ok(Self::Response {
                 header,
                 old,
                 new,

@@ -122,7 +122,7 @@ impl<S> Connection<S> {
     }
 
     /// Get url for remote arangoDB server.
-    pub fn url(&self) -> &Url {
+    pub const fn url(&self) -> &Url {
         &self.arango_url
     }
 
@@ -217,7 +217,7 @@ impl Connection<Normal> {
     async fn establish<T: Into<String>>(
         arango_url: T,
         auth: Auth<'_>,
-    ) -> Result<Connection<Normal>, ClientError> {
+    ) -> Result<Self, ClientError> {
         let url_str = arango_url.into();
         let arango_url = Url::parse(&url_str)
             .map_err(|_| ClientError::InvalidServer(format!("invalid url: {}", url_str)))?
@@ -276,7 +276,7 @@ impl Connection<Normal> {
     #[maybe_async]
     pub async fn establish_without_auth<T: Into<String>>(
         arango_url: T,
-    ) -> Result<Connection<Normal>, ClientError> {
+    ) -> Result<Self, ClientError> {
         trace!("Establish without auth");
         Self::establish(arango_url.into(), Auth::None).await
     }
@@ -300,7 +300,7 @@ impl Connection<Normal> {
         arango_url: &str,
         username: &str,
         password: &str,
-    ) -> Result<Connection<Normal>, ClientError> {
+    ) -> Result<Self, ClientError> {
         trace!("Establish with basic auth");
         Self::establish(arango_url, Auth::basic(username, password)).await
     }
@@ -329,7 +329,7 @@ impl Connection<Normal> {
         arango_url: &str,
         username: &str,
         password: &str,
-    ) -> Result<Connection<Normal>, ClientError> {
+    ) -> Result<Self, ClientError> {
         trace!("Establish with jwt");
         Self::establish(arango_url, Auth::jwt(username, password)).await
     }
@@ -461,8 +461,8 @@ impl Connection<Admin> {
 }
 
 impl From<Connection<Normal>> for Connection<Admin> {
-    fn from(conn: Connection<Normal>) -> Connection<Admin> {
-        Connection {
+    fn from(conn: Connection<Normal>) -> Self {
+        Self {
             arango_url: conn.arango_url,
             session: conn.session,
             username: conn.username,
@@ -472,8 +472,8 @@ impl From<Connection<Normal>> for Connection<Admin> {
 }
 
 impl From<Connection<Admin>> for Connection<Normal> {
-    fn from(conn: Connection<Admin>) -> Connection<Normal> {
-        Connection {
+    fn from(conn: Connection<Admin>) -> Self {
+        Self {
             arango_url: conn.arango_url,
             session: conn.session,
             username: conn.username,

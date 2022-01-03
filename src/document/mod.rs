@@ -32,7 +32,7 @@ where
     T: Serialize + DeserializeOwned,
 {
     pub fn new(data: T) -> Self {
-        Document {
+        Self {
             document: data,
             header: Header {
                 _id: String::new(),
@@ -87,6 +87,6 @@ where
         };
         let document = serde_json::from_value(obj).map_err(DeError::custom)?;
 
-        Ok(Document { header, document })
+        Ok(Self { header, document })
     }
 }

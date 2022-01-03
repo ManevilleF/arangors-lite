@@ -41,7 +41,7 @@ impl ReqwestClient {
 
         client
             .build()
-            .map(|c| ReqwestClient { client: c, headers })
+            .map(|c| Self { client: c, headers })
             .map_err(|e| ClientError::HttpClient(HttpError::HttpClient(format!("{:?}", e))))
     }
 

@@ -130,7 +130,7 @@ pub struct Transaction {
 
 impl Transaction {
     pub(crate) fn new(tx: ArangoTransaction, session: Arc<ReqwestClient>, base_url: Url) -> Self {
-        Transaction {
+        Self {
             id: tx.id,
             status: tx.status,
             session,
@@ -139,16 +139,16 @@ impl Transaction {
     }
 
     /// Returns the current transaction status (running, aborted or comitted)
-    pub fn status(&self) -> &Status {
+    pub const fn status(&self) -> &Status {
         &self.status
     }
 
     /// Returns the transaction id
-    pub fn id(&self) -> &String {
+    pub const fn id(&self) -> &String {
         &self.id
     }
 
-    pub fn url(&self) -> &Url {
+    pub const fn url(&self) -> &Url {
         &self.base_url
     }
 

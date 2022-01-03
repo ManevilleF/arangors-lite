@@ -35,12 +35,12 @@ impl<'de> Deserialize<'de> for Status {
     {
         let value = u8::deserialize(deserializer)?;
         match value {
-            1 => Ok(Status::NewBorn),
-            2 => Ok(Status::Unloaded),
-            3 => Ok(Status::Loaded),
-            4 => Ok(Status::Unloading),
-            5 => Ok(Status::Deleted),
-            6 => Ok(Status::Loading),
+            1 => Ok(Self::NewBorn),
+            2 => Ok(Self::Unloaded),
+            3 => Ok(Self::Loaded),
+            4 => Ok(Self::Unloading),
+            5 => Ok(Self::Deleted),
+            6 => Ok(Self::Loading),
             _ => Err(DeError::custom(
                 "Undefined behavior. If the crate breaks after an upgrade of ArangoDB, please \
                  contact the author.",

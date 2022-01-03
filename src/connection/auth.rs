@@ -35,11 +35,11 @@ impl<'a> Default for Auth<'a> {
 }
 
 impl<'a> Auth<'a> {
-    pub fn basic(username: &'a str, password: &'a str) -> Auth<'a> {
+    pub const fn basic(username: &'a str, password: &'a str) -> Auth<'a> {
         Auth::Basic(Credential { username, password })
     }
 
-    pub fn jwt(username: &'a str, password: &'a str) -> Auth<'a> {
+    pub const fn jwt(username: &'a str, password: &'a str) -> Auth<'a> {
         Auth::Jwt(Credential { username, password })
     }
 }

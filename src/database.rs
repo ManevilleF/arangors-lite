@@ -49,11 +49,11 @@ impl Database {
         name: T,
         arango_url: &Url,
         session: Arc<ReqwestClient>,
-    ) -> Database {
+    ) -> Self {
         let name = name.into();
         let path = format!("/_db/{}/", name.as_str());
         let url = arango_url.join(path.as_str()).unwrap();
-        Database {
+        Self {
             name,
             session,
             base_url: url,
@@ -82,7 +82,7 @@ impl Database {
         Ok(result.unwrap())
     }
 
-    pub fn url(&self) -> &Url {
+    pub const fn url(&self) -> &Url {
         &self.base_url
     }
 

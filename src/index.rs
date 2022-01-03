@@ -128,7 +128,7 @@ pub enum IndexSettings {
 
 impl Default for IndexSettings {
     fn default() -> Self {
-        IndexSettings::Persistent {
+        Self::Persistent {
             unique: false,
             sparse: false,
             deduplicate: false,

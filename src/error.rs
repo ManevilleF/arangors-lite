@@ -49,11 +49,11 @@ impl fmt::Display for ArangoError {
 
 impl ArangoError {
     /// Get the HTTP status code of an error response.
-    pub fn code(&self) -> u16 {
+    pub const fn code(&self) -> u16 {
         self.code
     }
 
-    pub fn error_num(&self) -> u16 {
+    pub const fn error_num(&self) -> u16 {
         self.error_num
     }
 

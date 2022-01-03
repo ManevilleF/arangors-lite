@@ -98,7 +98,7 @@ impl Collection {
         )
     }
 
-    pub fn collection_type(&self) -> CollectionType {
+    pub const fn collection_type(&self) -> CollectionType {
         self.collection_type
     }
 
@@ -137,13 +137,13 @@ impl Collection {
     /// Collection url: http://server:port/_db/mydb/_api/collection/{collection-name}
     ///
     /// This url is used to work on the collection itself
-    pub fn url(&self) -> &Url {
+    pub const fn url(&self) -> &Url {
         &self.base_url
     }
     /// Document base url: http://server:port/_db/mydb/_api/document/{collection-name}
     ///
     /// This url is used to work with documents
-    pub fn doc_url(&self) -> &Url {
+    pub const fn doc_url(&self) -> &Url {
         &self.document_base_url
     }
 
@@ -826,8 +826,8 @@ impl<'de> Deserialize<'de> for CollectionType {
     {
         let value = u8::deserialize(deserializer)?;
         match value {
-            2 => Ok(CollectionType::Document),
-            3 => Ok(CollectionType::Edge),
+            2 => Ok(Self::Document),
+            3 => Ok(Self::Edge),
             _ => Err(serde::de::Error::custom(
                 "Undefined behavior. If the crate breaks after an upgrade of ArangoDB, please \
                  contact the author.",

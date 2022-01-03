@@ -366,7 +366,7 @@ pub struct AqlOptions {
 }
 
 impl Default for AqlOptions {
-    fn default() -> AqlOptions {
+    fn default() -> Self {
         Self::builder().build()
     }
 }

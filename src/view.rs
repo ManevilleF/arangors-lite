@@ -75,7 +75,7 @@ pub struct ArangoSearchViewLink {
     pub store_values: Option<StoreValues>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Copy, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum SortDirection {
     Asc,
@@ -138,19 +138,15 @@ pub struct PrimarySort {
 
 impl PrimarySort {
     pub fn direction(&self) -> Option<SortDirection> {
-        if self.direction.is_none() {
-            if let Some(asc) = self.asc {
+        self.direction.or_else(|| {
+            self.asc.map(|asc| {
                 if asc {
-                    Some(SortDirection::Asc)
+                    SortDirection::Asc
                 } else {
-                    Some(SortDirection::Desc)
+                    SortDirection::Desc
                 }
-            } else {
-                None
-            }
-        } else {
-            self.direction.clone()
-        }
+            })
+        })
     }
 }
 
