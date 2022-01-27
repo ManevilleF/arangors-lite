@@ -1,5 +1,11 @@
 # Arangors Lite Changelog
 
+## Unreleased
+
+- Clippy improvements
+- Added `inline` hints
+- Added `must_use` attributes
+
 ## 0.1.0
 
 * Removed `uclient` dependency
