@@ -2,7 +2,7 @@
 //!
 //! > `arangors_lite` is a fork of [arangors](https://github.com/fMeow/arangors) by fMeow.
 //!
-//! [![Build Status](https://github.com/ManevilleF/arangors/workflows/linux.yml/badge.svg)](https://github.com/ManevilleF/arangors/actions)
+//! [![Build Status](https://github.com/ManevilleF/arangors-lite/workflows/linux.yml/badge.svg)](https://github.com/ManevilleF/arangors-lite/actions)
 //! [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 //! [![Crates.io](https://img.shields.io/crates/v/arangors_lite.svg)](https://crates.io/crates/arangors_lite)
 //! [![arangors](https://docs.rs/arangors_lite/badge.svg)](https://docs.rs/arangors_lite)
