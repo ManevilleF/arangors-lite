@@ -21,6 +21,7 @@ pub struct ReqwestClient {
 }
 
 impl ReqwestClient {
+    #[inline]
     pub fn with_client(
         client: Client,
         headers: impl Into<Option<HeaderMap>>,

@@ -129,6 +129,8 @@ pub struct Transaction {
 }
 
 impl Transaction {
+    #[must_use]
+    #[inline]
     pub(crate) fn new(tx: ArangoTransaction, session: Arc<ReqwestClient>, base_url: Url) -> Self {
         Self {
             id: tx.id,
@@ -139,20 +141,28 @@ impl Transaction {
     }
 
     /// Returns the current transaction status (running, aborted or comitted)
+    #[must_use]
+    #[inline]
     pub const fn status(&self) -> &Status {
         &self.status
     }
 
     /// Returns the transaction id
+    #[must_use]
+    #[inline]
     pub const fn id(&self) -> &String {
         &self.id
     }
 
+    #[must_use]
+    #[inline]
     pub const fn url(&self) -> &Url {
         &self.base_url
     }
 
     /// The transaction session, contains the streaming transaction header value
+    #[must_use]
+    #[inline]
     pub fn session(&self) -> Arc<ReqwestClient> {
         Arc::clone(&self.session)
     }

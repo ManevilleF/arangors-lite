@@ -355,7 +355,6 @@ pub mod document;
 pub mod error;
 pub mod graph;
 pub mod index;
-mod query;
 mod response;
 pub mod transaction;
 pub mod view;

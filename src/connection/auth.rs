@@ -35,10 +35,14 @@ impl<'a> Default for Auth<'a> {
 }
 
 impl<'a> Auth<'a> {
+    #[must_use]
+    #[inline]
     pub const fn basic(username: &'a str, password: &'a str) -> Auth<'a> {
         Auth::Basic(Credential { username, password })
     }
 
+    #[must_use]
+    #[inline]
     pub const fn jwt(username: &'a str, password: &'a str) -> Auth<'a> {
         Auth::Jwt(Credential { username, password })
     }

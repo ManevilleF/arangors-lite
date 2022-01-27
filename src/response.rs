@@ -95,6 +95,8 @@ pub(crate) struct ArangoResult<T> {
 }
 
 impl<T> ArangoResult<T> {
+    #[must_use]
+    #[inline]
     pub fn unwrap(self) -> T {
         self.result
     }

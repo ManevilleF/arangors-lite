@@ -45,6 +45,8 @@ pub struct Database {
 }
 
 impl Database {
+    #[must_use]
+    #[inline]
     pub(crate) fn new<T: Into<String>>(
         name: T,
         arango_url: &Url,
@@ -82,14 +84,20 @@ impl Database {
         Ok(result.unwrap())
     }
 
+    #[must_use]
+    #[inline]
     pub const fn url(&self) -> &Url {
         &self.base_url
     }
 
+    #[must_use]
+    #[inline]
     pub fn name(&self) -> &str {
         &self.name
     }
 
+    #[must_use]
+    #[inline]
     pub fn session(&self) -> Arc<ReqwestClient> {
         Arc::clone(&self.session)
     }

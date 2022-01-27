@@ -217,7 +217,7 @@ pub struct CreateOptions<'a> {
     smart_join_attribute: Option<String>,
 }
 
-fn is_true(x: &bool) -> bool {
+const fn is_true(x: &bool) -> bool {
     *x
 }
 
