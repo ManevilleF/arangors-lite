@@ -326,6 +326,7 @@ async fn test_get_checksum() {
     coll.drop().await.expect("Should drop the collection");
 }
 
+#[cfg(feature = "arango3_7")]
 #[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_put_load() {
     test_setup();
@@ -370,6 +371,7 @@ async fn test_put_load() {
     coll.drop().await.expect("Should drop the collection");
 }
 
+#[cfg(feature = "arango3_7")]
 #[maybe_async::test(feature = "blocking", async(not(feature = "blocking"), tokio::test))]
 async fn test_put_unload() {
     test_setup();

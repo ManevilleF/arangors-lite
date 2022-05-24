@@ -344,7 +344,10 @@ impl Collection {
     ///
     /// # Note
     /// this function would make a request to arango server.
+    ///
+    /// Deprecated since ArangoDB 3.8: https://www.arangodb.com/docs/stable/http/collection-modifying.html#load-collection
     #[maybe_async]
+    #[cfg(feature = "arango3_7")]
     pub async fn load(&self, count: bool) -> Result<Info, ClientError> {
         let url = self.base_url.join("load").unwrap();
         let body = json!({ "count": count });
@@ -363,8 +366,12 @@ impl Collection {
     /// afterwards; in which case it will be loaded into memory, again.
     ///
     /// # Note
+    ///
     /// this function would make a request to arango server.
+    ///
+    /// Deprecated since ArangoDB 3.8: https://www.arangodb.com/docs/stable/http/collection-modifying.html#unload-collection
     #[maybe_async]
+    #[cfg(feature = "arango3_7")]
     pub async fn unload(&self) -> Result<Info, ClientError> {
         let url = self.base_url.join("unload").unwrap();
         let resp: Info = deserialize_response(self.session.put(url.to_string(), "").await?.body())?;
