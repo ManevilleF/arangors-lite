@@ -66,7 +66,7 @@ async fn test_aql_try_bind() {
     };
     let aql = AqlQuery::new
         (r#"FOR i in test_collection FILTER i.username==@user.username AND i.password==@user.password return i"#)
-        .try_bind("user", user)
+        .try_bind_var("user", user)
         .unwrap();
     let result: Vec<Document<User>> = db.aql_query(aql).await.unwrap();
     assert_eq!(result.len(), 1);

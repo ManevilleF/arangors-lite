@@ -61,7 +61,7 @@ async fn main() {
     // use try_bind for any serializable struct
     let aql = AqlQuery::new("INSERT @user INTO @@collection LET result = NEW RETURN result")
         .bind_var("@collection", collection)
-        .try_bind("user", jane_doe)
+        .try_bind_var("user", jane_doe)
         .unwrap();
 
     let result: Vec<User> = database.aql_query(aql).await.unwrap();

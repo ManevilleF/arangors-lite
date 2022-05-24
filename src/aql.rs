@@ -408,7 +408,7 @@ mod test {
             password: "test2_pwd".to_owned(),
         };
         let q = r#"FOR i in test_collection FILTER i==@user return i"#;
-        let aql = AqlQuery::new(q).try_bind("user", user).unwrap();
+        let aql = AqlQuery::new(q).try_bind_var("user", user).unwrap();
 
         assert_eq!(aql.query, q);
         assert_eq!(aql.count, None);
@@ -422,10 +422,10 @@ mod test {
 
         let aql = AqlQuery::new(r#"FOR i in test_collection FILTER i.username==@username AND i.password==@password return i"#)
             // test the first bind
-            .try_bind("username", "test2")
+            .try_bind_var("username", "test2")
             .unwrap()
             // test the second bind
-            .try_bind("password", "test2_pwd")
+            .try_bind_var("password", "test2_pwd")
             .unwrap();
 
         assert_eq!(

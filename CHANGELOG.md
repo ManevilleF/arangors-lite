@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- (**BREAKING**) Removed `TypedBuilder` implementation for `AqlQuery`, replaced it with an explicit builder pattern
 - Clippy improvements
 - Added `inline` hints
 - Added `must_use` attributes
