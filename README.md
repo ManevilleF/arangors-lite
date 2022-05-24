@@ -8,7 +8,7 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Crates.io](https://img.shields.io/crates/v/arangors_lite.svg)](https://crates.io/crates/arangors_lite)
 [![arangors](https://docs.rs/arangors_lite/badge.svg)](https://docs.rs/arangors_lite)
-[![dependency status](https://deps.rs/crate/arangors_lite/0.1.0/status.svg)](https://deps.rs/crate/arangors_lite)
+[![dependency status](https://deps.rs/crate/arangors_lite/0.2.0/status.svg)](https://deps.rs/crate/arangors_lite)
 
 
 `arangors` is an intuitive rust client for [ArangoDB](https://www.arangodb.com/),
@@ -53,9 +53,9 @@ By now, the available features of arangors are:
 ```toml
 [dependencies]
 ## This one is async
-arangors = { version = "0.4" }
+arangors_lite = { version = "0.2" }
 ## This one is synchronous
-arangors = { version = "0.4", features = ["blocking"] }
+arangors_lite = { version = "0.2", features = ["blocking"] }
 ```
 
 Thanks to `maybe_async`, `arangors` can unify sync and async API and toggle
@@ -66,9 +66,9 @@ By default `reqwest` uses OpenSSL. To use `rustls` you may disable default featu
 ```toml
 [dependencies]
 ## This one uses openssl
-arangors = { version = "0.4" }
+arangors_lite = { version = "0.2" }
 ## This one rustls
-arangors = { version = "0.4", features = ["rustls"], default-features = false }
+arangors_lite = { version = "0.2", features = ["rustls"], default-features = false }
 ```
 
 ### Connection

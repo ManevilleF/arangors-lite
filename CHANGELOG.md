@@ -1,6 +1,6 @@
 # Arangors Lite Changelog
 
-## Unreleased
+## 0.2.0
 
 - (**BREAKING**) Removed `TypedBuilder` implementation for `AqlQuery`, replaced it with an explicit builder pattern
 - (**BREAKING**) `Collection::load` and `Collection::unload` required `arango3_7` feature
