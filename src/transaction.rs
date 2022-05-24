@@ -331,7 +331,7 @@ impl Transaction {
     where
         R: DeserializeOwned,
     {
-        let aql = AqlQuery::builder().query(query).build();
+        let aql = AqlQuery::new(query);
         self.aql_query(aql).await
     }
 
@@ -349,10 +349,7 @@ impl Transaction {
     where
         R: DeserializeOwned,
     {
-        let aql = AqlQuery::builder()
-            .query(query)
-            .bind_vars(bind_vars)
-            .build();
+        let aql = AqlQuery::new(query).bind_vars(bind_vars);
         self.aql_query(aql).await
     }
 }

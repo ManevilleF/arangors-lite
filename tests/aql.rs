@@ -35,9 +35,7 @@ async fn test_aql() {
     test_setup();
     let conn = connection().await;
     let db = conn.db("test_db").await.unwrap();
-    let aql = AqlQuery::builder()
-        .query(r#"FOR i in test_collection FILTER i.username=="test2" return i"#)
-        .build();
+    let aql = AqlQuery::new(r#"FOR i in test_collection FILTER i.username=="test2" return i"#);
     let result: Vec<Document<User>> = db.aql_query(aql).await.unwrap();
     assert_eq!(result.len(), 1);
     assert_eq!(result[0].document.password, "test2_pwd");
@@ -48,11 +46,9 @@ async fn test_aql_bind_vars() {
     test_setup();
     let conn = connection().await;
     let db = conn.db("test_db").await.unwrap();
-    let aql = AqlQuery::builder()
-        .query(r#"FOR i in test_collection FILTER i.username==@username AND i.password==@password return i"#)
+    let aql = AqlQuery::new(r#"FOR i in test_collection FILTER i.username==@username AND i.password==@password return i"#)
         .bind_var("username", "test2")
-        .bind_var("password", "test2_pwd")
-        .build();
+        .bind_var("password", "test2_pwd");
     let result: Vec<Document<User>> = db.aql_query(aql).await.unwrap();
     assert_eq!(result.len(), 1);
     assert_eq!(result[0].document.password, "test2_pwd");
@@ -68,11 +64,10 @@ async fn test_aql_try_bind() {
         username: "test2".to_owned(),
         password: "test2_pwd".to_owned(),
     };
-    let aql = AqlQuery::builder()
-        .query(r#"FOR i in test_collection FILTER i.username==@user.username AND i.password==@user.password return i"#)
-        .try_bind("user", user)
-        .unwrap()
-        .build();
+    let aql = AqlQuery::new
+        (r#"FOR i in test_collection FILTER i.username==@user.username AND i.password==@user.password return i"#)
+        .try_bind_var("user", user)
+        .unwrap();
     let result: Vec<Document<User>> = db.aql_query(aql).await.unwrap();
     assert_eq!(result.len(), 1);
     assert_eq!(result[0].document.password, "test2_pwd");
