@@ -8,6 +8,7 @@
 ///     - (optional) construct AqlOption.
 /// 1. perform AQL query via `database.aql_query`.
 use std::collections::HashMap;
+use std::fmt::{Display, Formatter};
 
 use crate::ClientError;
 use serde::{Deserialize, Serialize};
@@ -94,6 +95,12 @@ impl<'a> AqlQuery<'a> {
     }
 
     #[inline]
+    #[must_use]
+    pub fn query(&self) -> &'a str {
+        self.query
+    }
+
+    #[inline]
     pub fn count(mut self, count: bool) -> Self {
         self.count = Some(count);
         self
@@ -149,6 +156,12 @@ impl<'a> AqlQuery<'a> {
     ) -> Result<Self, ClientError> {
         self.bind_vars.insert(var, serde_json::to_value(value)?);
         Ok(self)
+    }
+}
+
+impl Display for AqlQuery<'_> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.query)
     }
 }
 
