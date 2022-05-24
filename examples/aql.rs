@@ -31,9 +31,7 @@ async fn main() {
         .unwrap();
 
     let database = conn.db("test_db").await.unwrap();
-    let aql = AqlQuery::builder()
-        .query("FOR u IN test_collection LIMIT 3 RETURN u")
-        .build();
+    let aql = AqlQuery::new("FOR u IN test_collection LIMIT 3 RETURN u");
     println!("{:?}", aql);
     println!("{:?}", serde_json::to_string(&aql).unwrap());
 
@@ -48,11 +46,9 @@ async fn main() {
     };
     // use bind_var for any struct that can be converted into serde_json::Value
     let json = serde_json::to_value(&user).unwrap();
-    let aql = AqlQuery::builder()
-        .query("INSERT @user INTO @@collection LET result = NEW RETURN result")
+    let aql = AqlQuery::new("INSERT @user INTO @@collection LET result = NEW RETURN result")
         .bind_var("@collection", collection)
-        .bind_var("user", json)
-        .build();
+        .bind_var("user", json);
 
     let result: Vec<User> = database.aql_query(aql).await.unwrap();
     println!("{:?}", result);
@@ -63,12 +59,10 @@ async fn main() {
         email: "jane.done@who.com".to_string(),
     };
     // use try_bind for any serializable struct
-    let aql = AqlQuery::builder()
-        .query("INSERT @user INTO @@collection LET result = NEW RETURN result")
+    let aql = AqlQuery::new("INSERT @user INTO @@collection LET result = NEW RETURN result")
         .bind_var("@collection", collection)
         .try_bind("user", jane_doe)
-        .unwrap()
-        .build();
+        .unwrap();
 
     let result: Vec<User> = database.aql_query(aql).await.unwrap();
     println!("{:?}", result);
@@ -84,10 +78,8 @@ async fn main() {
     map.insert("user", serde_json::to_value(homer_simpson).unwrap());
 
     // use bind_vars to pass a HashMap of bind variables
-    let aql = AqlQuery::builder()
-        .query("INSERT @user INTO @@collection LET result = NEW RETURN result")
-        .bind_vars(map)
-        .build();
+    let aql = AqlQuery::new("INSERT @user INTO @@collection LET result = NEW RETURN result")
+        .bind_vars(map);
 
     let result: Vec<User> = database.aql_query(aql).await.unwrap();
     println!("{:?}", result);

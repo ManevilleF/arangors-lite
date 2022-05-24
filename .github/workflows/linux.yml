@@ -22,7 +22,7 @@ jobs:
       - name: rustfmt
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         with:
           command: fmt
           args: --all -- --check
@@ -30,7 +30,7 @@ jobs:
       - name: check build (blocking)
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         with:
           command: check
           args:  --features "rocksdb cluster enterprise blocking" --lib
@@ -38,7 +38,7 @@ jobs:
       - name: test (blocking)
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         timeout-minutes: 40
         with:
           command: test
@@ -47,7 +47,7 @@ jobs:
       - name: check build (default features)
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         with:
           command: check
           args: --all --bins --examples --tests
@@ -55,7 +55,7 @@ jobs:
       - name: tests (default features)
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         timeout-minutes: 40
         with:
           command: test
@@ -64,7 +64,7 @@ jobs:
       - name: check build (async rustls)
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         with:
           command: check
           args: --no-default-features --features "rustls rocksdb cluster enterprise" --lib
@@ -72,7 +72,7 @@ jobs:
       - name: test (async rustls)
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         timeout-minutes: 40
         with:
           command: test
@@ -81,7 +81,7 @@ jobs:
       - name: check build (blocking rustls)
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         with:
           command: check
           args: --no-default-features --features "rustls rocksdb cluster enterprise blocking" --lib
@@ -89,7 +89,7 @@ jobs:
       - name: test (blocking rustls)
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         timeout-minutes: 40
         with:
           command: test
@@ -114,7 +114,7 @@ jobs:
       - name: check build
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         with:
           command: check
           args: --all --bins --examples --tests --features "mmfiles cluster enterprise blocking" --lib
@@ -122,7 +122,7 @@ jobs:
       - name: tests
         uses: actions-rs/cargo@v1
         env:
-          RUST_LOG: arangors=trace
+          RUST_LOG: arangors_lite=trace
         timeout-minutes: 40
         with:
           command: test
@@ -141,22 +141,3 @@ jobs:
         with:
           command: doc
           args: --all --no-deps
-
-  publish:
-    name: Publish Package
-    needs: build_and_test
-    if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: login
-        env:
-          SUPER_SECRET: ${{ secrets.CARGO_TOKEN }}
-        run: cargo login "$SUPER_SECRET"
-        shell: bash
-
-      - name: publish
-        uses: actions-rs/cargo@v1
-        with:
-          command: publish

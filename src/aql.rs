@@ -9,33 +9,20 @@
 /// 1. perform AQL query via `database.aql_query`.
 use std::collections::HashMap;
 
+use crate::ClientError;
 use serde::{Deserialize, Serialize};
 use serde_json::value::Value;
 use typed_builder::TypedBuilder;
 
-#[derive(Debug, Serialize, TypedBuilder)]
-#[builder(
-    doc,
-    builder_method_doc = r#"Create a builder for building `AqlQuery`.
-
-On the builder, call `.query(...)`, `.bind_vars(...)(optional)`, `.bind_var(...)(optional)`,
-`.try_bind(...)(optional)`, `.count(...)(optional)`, `.batch_size(...)(optional)`,
-`.cache(...)(optional)`, `.memory_limit(...)(optional)`, `.ttl(...)(optional)`,
-`.options(...)(optional)` to set the values of the fields (they accept Into values).
-
-Use `.try_bind(...)` to accept any serializable struct
-while `.bind_value(...)` accepts an `Into<serde_json::Value>`.
-
-Finally, call .build() to create the instance of AqlQuery."#
-)]
+#[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
+#[must_use]
 pub struct AqlQuery<'a> {
     /// query string to be executed
     query: &'a str,
 
     /// bind parameters to substitute in query string
     #[serde(skip_serializing_if = "HashMap::is_empty")]
-    #[builder(default)]
     bind_vars: HashMap<&'a str, Value>,
 
     /// Indicates whether the number of documents in the result set should be
@@ -45,7 +32,6 @@ pub struct AqlQuery<'a> {
     /// for some queries in the future so this option is turned off by default,
     /// and 'count' is only returned when requested.
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(default, setter(strip_option))]
     count: Option<bool>,
 
     /// Maximum number of result documents to be transferred from the server to
@@ -56,7 +42,6 @@ pub struct AqlQuery<'a> {
     ///
     /// A batchSize value of 0 is disallowed.
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(default, setter(strip_option))]
     batch_size: Option<u32>,
 
     /// A flag to determine whether the AQL query cache shall be used.
@@ -66,7 +51,6 @@ pub struct AqlQuery<'a> {
     /// checked for the query if the query cache mode is either on or
     /// demand.
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(default, setter(strip_option))]
     cache: Option<bool>,
 
     /// The maximum number of memory (measured in bytes) that the query is
@@ -77,7 +61,6 @@ pub struct AqlQuery<'a> {
     ///
     /// A value of 0 indicates that there is no memory limit.
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(default, setter(strip_option))]
     memory_limit: Option<u64>,
 
     /// The time-to-live for the cursor (in seconds).
@@ -88,170 +71,84 @@ pub struct AqlQuery<'a> {
     ///
     /// If not set, a server-defined value will be used.
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(default, setter(strip_option))]
     ttl: Option<u32>,
 
     /// Options
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(default, setter(strip_option))]
     options: Option<AqlOptions>,
 }
 
-// when binding the first query variable
-#[allow(non_camel_case_types, missing_docs)]
-impl<'a, __query, __count, __batch_size, __cache, __memory_limit, __ttl, __options>
-    AqlQueryBuilder<
-        'a,
-        (
-            __query,
-            (),
-            __count,
-            __batch_size,
-            __cache,
-            __memory_limit,
-            __ttl,
-            __options,
-        ),
-    >
-{
-    #[allow(clippy::type_complexity)]
-    pub fn bind_var<K, V>(
-        self,
-        key: K,
-        value: V,
-    ) -> AqlQueryBuilder<
-        'a,
-        (
-            __query,
-            (HashMap<&'a str, Value>,),
-            __count,
-            __batch_size,
-            __cache,
-            __memory_limit,
-            __ttl,
-            __options,
-        ),
-    >
-    where
-        K: Into<&'a str>,
-        V: Into<Value>,
-    {
-        let mut bind_vars = HashMap::new();
-        bind_vars.insert(key.into(), value.into());
-        let (query, _, count, batch_size, cache, memory_limit, ttl, options) = self.fields;
-        AqlQueryBuilder {
-            fields: (
-                query,
-                (bind_vars,),
-                count,
-                batch_size,
-                cache,
-                memory_limit,
-                ttl,
-                options,
-            ),
-            phantom: self.phantom,
+impl<'a> AqlQuery<'a> {
+    #[inline]
+    pub fn new(query: &'a str) -> Self {
+        Self {
+            query,
+            bind_vars: Default::default(),
+            count: None,
+            batch_size: None,
+            cache: None,
+            memory_limit: None,
+            ttl: None,
+            options: None,
         }
     }
 
-    #[allow(clippy::type_complexity)]
-    pub fn try_bind<K, V>(
-        self,
-        key: K,
-        value: V,
-    ) -> Result<
-        AqlQueryBuilder<
-            'a,
-            (
-                __query,
-                (HashMap<&'a str, Value>,),
-                __count,
-                __batch_size,
-                __cache,
-                __memory_limit,
-                __ttl,
-                __options,
-            ),
-        >,
-        serde_json::Error,
-    >
-    where
-        K: Into<&'a str>,
-        V: serde::Serialize,
-    {
-        Ok(self.bind_var(key, serde_json::to_value(value)?))
-    }
-}
-
-// when bind_var(s) are not empty
-#[allow(non_camel_case_types, missing_docs)]
-impl<'a, __query, __count, __batch_size, __cache, __memory_limit, __ttl, __options>
-    AqlQueryBuilder<
-        'a,
-        (
-            __query,
-            (HashMap<&'a str, Value>,),
-            __count,
-            __batch_size,
-            __cache,
-            __memory_limit,
-            __ttl,
-            __options,
-        ),
-    >
-{
-    #[allow(clippy::type_complexity)]
-    pub fn bind_var<K, V>(
-        mut self,
-        key: K,
-        value: V,
-    ) -> AqlQueryBuilder<
-        'a,
-        (
-            __query,
-            (HashMap<&'a str, Value>,),
-            __count,
-            __batch_size,
-            __cache,
-            __memory_limit,
-            __ttl,
-            __options,
-        ),
-    >
-    where
-        K: Into<&'a str>,
-        V: Into<Value>,
-    {
-        (self.fields.1).0.insert(key.into(), value.into());
+    #[inline]
+    pub fn count(mut self, count: bool) -> Self {
+        self.count = Some(count);
         self
     }
 
-    #[allow(clippy::type_complexity)]
-    pub fn try_bind<K, V>(
-        self,
-        key: K,
-        value: V,
-    ) -> Result<
-        AqlQueryBuilder<
-            'a,
-            (
-                __query,
-                (HashMap<&'a str, Value>,),
-                __count,
-                __batch_size,
-                __cache,
-                __memory_limit,
-                __ttl,
-                __options,
-            ),
-        >,
-        serde_json::Error,
-    >
-    where
-        K: Into<&'a str>,
-        V: serde::Serialize,
-    {
-        Ok(self.bind_var(key, serde_json::to_value(value)?))
+    #[inline]
+    pub fn batch_size(mut self, batch_size: u32) -> Self {
+        self.batch_size = Some(batch_size);
+        self
+    }
+
+    #[inline]
+    pub fn cache(mut self, cache: bool) -> Self {
+        self.cache = Some(cache);
+        self
+    }
+
+    #[inline]
+    pub fn memory_limit(mut self, memory_limit: u64) -> Self {
+        self.memory_limit = Some(memory_limit);
+        self
+    }
+
+    #[inline]
+    pub fn ttl(mut self, ttl: u32) -> Self {
+        self.ttl = Some(ttl);
+        self
+    }
+
+    #[inline]
+    pub fn options(mut self, options: AqlOptions) -> Self {
+        self.options = Some(options);
+        self
+    }
+
+    #[inline]
+    pub fn bind_vars(mut self, bind_vars: HashMap<&'a str, Value>) -> Self {
+        self.bind_vars.extend(bind_vars);
+        self
+    }
+
+    #[inline]
+    pub fn bind_var(mut self, var: &'a str, value: impl Into<Value>) -> Self {
+        self.bind_vars.insert(var, value.into());
+        self
+    }
+
+    #[inline]
+    pub fn try_bind_var(
+        mut self,
+        var: &'a str,
+        value: impl serde::Serialize,
+    ) -> Result<Self, ClientError> {
+        self.bind_vars.insert(var, serde_json::to_value(value)?);
+        Ok(self)
     }
 }
 
@@ -471,8 +368,7 @@ mod test {
     #[test]
     fn aql_query_builder_bind_var() {
         let q = r#"FOR i in test_collection FILTER i.username==@username AND i.password==@password return i"#;
-        let aql = AqlQuery::builder()
-            .query(q)
+        let aql = AqlQuery::new(q)
             // test the first bind
             .bind_var("username", "test2")
             // test the second bind
@@ -481,8 +377,7 @@ mod test {
             .batch_size(256)
             .cache(false)
             .memory_limit(100)
-            .ttl(10)
-            .build();
+            .ttl(10);
         assert_eq!(aql.query, q);
         assert_eq!(aql.count, Some(true));
         assert_eq!(aql.batch_size, Some(256u32));
@@ -513,11 +408,7 @@ mod test {
             password: "test2_pwd".to_owned(),
         };
         let q = r#"FOR i in test_collection FILTER i==@user return i"#;
-        let aql = AqlQuery::builder()
-            .query(q)
-            .try_bind("user", user)
-            .unwrap()
-            .build();
+        let aql = AqlQuery::new(q).try_bind("user", user).unwrap();
 
         assert_eq!(aql.query, q);
         assert_eq!(aql.count, None);
@@ -529,15 +420,13 @@ mod test {
 
         assert_eq!(aql.bind_vars.get("user"), Some(&Value::Object(map)));
 
-        let aql = AqlQuery::builder()
-            .query(r#"FOR i in test_collection FILTER i.username==@username AND i.password==@password return i"#)
+        let aql = AqlQuery::new(r#"FOR i in test_collection FILTER i.username==@username AND i.password==@password return i"#)
             // test the first bind
             .try_bind("username", "test2")
             .unwrap()
             // test the second bind
             .try_bind("password", "test2_pwd")
-            .unwrap()
-            .build();
+            .unwrap();
 
         assert_eq!(
             aql.bind_vars.get("username"),

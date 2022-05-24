@@ -195,12 +195,10 @@
 //! #     .unwrap();
 //! # let db = conn.db("test_db").await.unwrap();
 //!
-//! let aql = AqlQuery::builder()
-//!     .query("FOR u IN @@collection LIMIT 3 RETURN u")
+//! let aql = AqlQuery::new("FOR u IN @@collection LIMIT 3 RETURN u")
 //!     .bind_var("@collection", "test_collection")
 //!     .batch_size(1)
-//!     .count(true)
-//!     .build();
+//!     .count(true);
 //!
 //! // fetch the first cursor
 //! let mut cursor = db.aql_query_batch(aql).await.unwrap();
@@ -317,12 +315,10 @@
 //! #     .unwrap();
 //! # let db = conn.db("test_db").await.unwrap();
 //!
-//! let aql = AqlQuery::builder()
-//!     .query("FOR u IN @@collection LIMIT 3 RETURN u")
+//! let aql = AqlQuery::new("FOR u IN @@collection LIMIT 3 RETURN u")
 //!     .bind_var("@collection", "test_collection")
 //!     .batch_size(1)
-//!     .count(true)
-//!     .build();
+//!     .count(true);
 //!
 //! let resp: Vec<Value> = db.aql_query(aql).await.unwrap();
 //! println!("{:?}", resp);
