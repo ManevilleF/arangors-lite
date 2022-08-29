@@ -1,5 +1,10 @@
 # Arangors Lite Changelog
 
+## Unreleased
+
+- Bump `serde_qs` to 0.10
+- Bump `typed_builder` to 0.10
+
 ## 0.2.0
 
 - (**BREAKING**) Removed `TypedBuilder` implementation for `AqlQuery`, replaced it with an explicit builder pattern
