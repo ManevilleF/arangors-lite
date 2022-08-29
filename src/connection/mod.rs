@@ -91,6 +91,7 @@ pub struct Connection<S = Normal> {
     session: Arc<ReqwestClient>,
     arango_url: Url,
     username: String,
+    #[allow(dead_code)]
     state: S,
 }
 
