@@ -165,7 +165,7 @@ impl Display for AqlQuery<'_> {
     }
 }
 
-#[derive(Debug, Serialize, TypedBuilder, PartialEq)]
+#[derive(Debug, Serialize, TypedBuilder, PartialEq, Eq)]
 #[builder(doc)]
 #[serde(rename_all = "camelCase")]
 pub struct AqlOptions {
